@@ -15,7 +15,8 @@ int main()
     q.pop();
     cout << "First element:- " << q.front() << endl;
 
-    cout<<"Size:- "<<q.size();
+    cout<<"Size:- "<<q.size()<<endl;
     
+
     return 0;
 }
