@@ -15,6 +15,20 @@ char toLower(char ch)
     }
     return temp;
 }
+char toUpper(char ch)
+{
+    char temp;
+    if (ch >= 'A' && ch <= 'Z')
+    {
+        return ch;
+    }
+
+    else
+    {
+        temp = ch + 'A' - 'a';
+    }
+    return temp;
+}
 
 int getLength(char name[])
 {
@@ -25,28 +39,6 @@ int getLength(char name[])
         i++;
     }
     return i;
-}
-
-bool check_palindrome(char name[])
-{
-
-    int i = 0;
-    int j = getLength(name) - 1;
-
-    while (i < j)
-    {
-        if (toLower(name[i]) != toLower(name[j]))
-        {
-            return false;
-        }
-        else
-        {
-            i++;
-            j--;
-        }
-    }
-
-    return true;
 }
 
 void reverse(char name[])
@@ -74,12 +66,28 @@ int main()
 
     cout << "Length of name is " << getLength(name) << endl;
 
+    cout << "To lower case a string:-" << endl;
+    for (int i = 0; name[i] != '\0'; i++)
+    {
+        name[i] = toLower(name[i]);
+    }
+
+      cout << name << endl;
+
+      
+    cout << "To Upper case a string:-" << endl;
+    for (int i = 0; name[i] != '\0'; i++)
+    {
+        name[i] = toUpper(name[i]);
+    }
+
+    cout << name << endl;
+
     cout << "Reversing the string" << endl;
     reverse(name);
     cout << name << endl;
 
-    cout << "Checking Whether string is palindrome or not:-" << endl;
-    cout << check_palindrome(name) << endl;
-
+    string name2 = "ab\0cde";
+    cout << name2;
     return 0;
 }
