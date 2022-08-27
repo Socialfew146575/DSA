@@ -72,9 +72,8 @@ int main()
         name[i] = toLower(name[i]);
     }
 
-      cout << name << endl;
+    cout << name << endl;
 
-      
     cout << "To Upper case a string:-" << endl;
     for (int i = 0; name[i] != '\0'; i++)
     {
@@ -87,7 +86,14 @@ int main()
     reverse(name);
     cout << name << endl;
 
-    string name2 = "ab\0cde";
-    cout << name2;
+    char name2[100];
+    string name3;
+    cin >> name2;           // Input-->My name is Arun lohani..
+    cout << name2 << endl;  // Output---->My
+
+    
+
+    getline(cin,name3,' '); // Input---->My name is Arun Lohani.
+    cout << name3 << endl;  // Output--->My name is Arun Lohani.
     return 0;
 }
