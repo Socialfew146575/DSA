@@ -1,4 +1,4 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 char toLower(char ch)
@@ -87,13 +87,20 @@ int main()
     cout << name << endl;
 
     char name2[100];
-    string name3;
-    cin >> name2;           // Input-->My name is Arun lohani..
-    cout << name2 << endl;  // Output---->My
+    cin >> name2;          // Input-->My name is Arun lohani..
+    cout << name2 << endl; // Output---->My
 
-    
+    char name3[100];
+    cin.getline(name3, 100); // Input-->My name is Arun lohani..
+    cout << name3<<endl;           // Output---->My Name is Arun Lohani
 
-    getline(cin,name3,' '); // Input---->My name is Arun Lohani.
-    cout << name3 << endl;  // Output--->My name is Arun Lohani.
+    // Inbuilt char Array functions
+    int len=strlen(name3);
+    cout<<"Length of name3:-  "<<len<<endl;
+
+    cout<<"to compare two char array  "<<strcmp(name2,name3)<<endl;
+
+    strcpy(name3,name2);
+    cout<<"to copy a string  "<<name3<<endl;
     return 0;
 }
