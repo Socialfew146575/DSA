@@ -1,0 +1,10 @@
+
+If the brute force of the problem has a time complexity of O(n^2) and the second loop is depended on the value of first loop
+there is 90% chance that stack will be used...
+
+
+for(int i=0;i<n;i++){
+
+for(int j=i+1;j<n;j++){ ------------->j depends on i..
+
+ 
