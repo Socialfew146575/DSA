@@ -106,27 +106,52 @@ void levelorderTraversal(node *root)
     }
 }
 
-node *lca(node *root, int n1, int n2)
+class info
 {
-    if (root == nullptr)
-        return nullptr;
 
-    if (root->data == n1 || root->data == n2)
+public:
+    int maxi;
+    int mini;
+    bool isBST;
+    int size;
+};
+
+info solve(node *root, int &ans)
+{
+    // cout<<root->data<<" "<<ans<<endl;
+    if (root == nullptr)
     {
-        return root;
+
+        return {INT_MIN, INT_MAX, true, 0};
     }
 
-    node *leftAns = lca(root->left, n1, n2);
-    node *rightAns = lca(root->right, n1, n2);
+    info left = solve(root->left, ans);
+    info right = solve(root->right, ans);
 
-    if (leftAns == nullptr && rightAns == nullptr)
-        return nullptr;
-    if (leftAns != nullptr && rightAns != nullptr)
-        return root;
-    if (leftAns != nullptr && rightAns == nullptr)
-        return leftAns;
-    if (leftAns == nullptr && rightAns != nullptr)
-        return rightAns;
+    info currNode;
+
+    currNode.size = left.size + right.size + 1;
+    currNode.maxi = max(root->data, right.maxi);
+    currNode.mini = min(root->data, left.mini);
+    if ((root->data > left.maxi) && (root->data < right.mini) && (left.isBST && right.isBST))
+       {   
+         currNode.isBST = true;}
+
+    if (currNode.isBST)
+    {   
+        
+        ans = max(ans, currNode.size);
+    }
+    return currNode;
+}
+
+int largestBst(node *root)
+{
+
+    int maxSize = 0;
+    info temp = solve(root, maxSize);
+
+    return maxSize;
 }
 
 int main()
@@ -136,16 +161,14 @@ int main()
     // 1 3 5 7 9 11 13 -1 -1 -1 -1 -1 -1 -1 -1
     // 1 10 -1 5 -1 -1 -1
     // 1 2 3 4 5 6 7 -1 -1 -1 -1 -1 -1 -1 -1
-
+    // 1 2 5 3 4 -1 6 -1 -1 -1 7 -1 8 -1 -1 -1 9 -1 -1
     // 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 
     buildFromLevelOrder(root);
     levelorderTraversal(root);
     cout << endl;
 
-    node *temp = lca(root, 3, 4);
-
-    cout << temp->data;
+    cout << largestBst(root);
 
     return 0;
 }

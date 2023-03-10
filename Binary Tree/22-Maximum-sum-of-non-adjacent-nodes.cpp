@@ -134,6 +134,40 @@ int sum(node *root)
     return max(ans.first, ans.second);
 }
 
+int answer(node *root)
+{
+
+    if (root == nullptr)
+        return 0;
+
+    int including = 0, excluding = 0;
+
+    including = root->data;
+
+    if (root->left)
+    {
+
+        including += answer(root->left->left);
+        including += answer(root->left->right);
+    }
+    if (root->right)
+    {
+
+        including += answer(root->right->left);
+        including += answer(root->right->right);
+    }
+    excluding += answer(root->left);
+    excluding += answer(root->right);
+
+    return max(including, excluding);
+}
+
+int getMaxSum(node *root)
+{
+
+    return answer(root);
+}
+
 int main()
 {
     node *root = nullptr;
@@ -148,7 +182,8 @@ int main()
     levelorderTraversal(root);
     cout << endl;
 
-    cout<<sum(root);
+    cout << sum(root) << endl;
+    cout << getMaxSum(root) << endl;
 
     return 0;
 }

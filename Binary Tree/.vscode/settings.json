@@ -4,6 +4,7 @@
     "ostream": "cpp",
     "cmath": "cpp",
     "complex": "cpp",
-    "cstdlib": "cpp"
+    "cstdlib": "cpp",
+    "functional": "cpp"
   }
 }

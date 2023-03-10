@@ -106,46 +106,107 @@ void levelorderTraversal(node *root)
     }
 }
 
-node *lca(node *root, int n1, int n2)
+node *createMapping(node *root, int target, map<node *, node *> &nodeToParent)
 {
-    if (root == nullptr)
-        return nullptr;
+    queue<node *> q;
+    q.push(root);
+    nodeToParent[root] = NULL;
+    node *res = nullptr;
 
-    if (root->data == n1 || root->data == n2)
+    while (!q.empty())
     {
-        return root;
+
+        node *front = q.front();
+        q.pop();
+        if (front->data == target)
+        {
+            res = front;
+        }
+
+        if (front->left)
+        {
+
+            q.push(front->left);
+            nodeToParent[front->left] = front;
+        }
+        if (front->right)
+        {
+
+            q.push(front->right);
+            nodeToParent[front->right] = front;
+        }
     }
 
-    node *leftAns = lca(root->left, n1, n2);
-    node *rightAns = lca(root->right, n1, n2);
+    return res;
+}
 
-    if (leftAns == nullptr && rightAns == nullptr)
-        return nullptr;
-    if (leftAns != nullptr && rightAns != nullptr)
-        return root;
-    if (leftAns != nullptr && rightAns == nullptr)
-        return leftAns;
-    if (leftAns == nullptr && rightAns != nullptr)
-        return rightAns;
+int burnTree(node *targetNode, map<node *, node *> nodeToParent)
+{
+
+    map<node *, bool> visited;
+    queue<node *> q;
+    visited[targetNode] = 1;
+    q.push(targetNode);
+    int ans = 0;
+    while (!q.empty())
+    {
+
+        int n = q.size();
+        bool flag = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            node *front = q.front();
+            q.pop();
+            if (front->left && !visited[front->left])
+            {
+
+                flag = 1;
+                visited[front->left] = 1;
+                q.push(front->left);
+            }
+            if (front->right && !visited[front->right])
+            {
+
+                flag = 1;
+                visited[front->right] = 1;
+                q.push(front->right);
+            }
+
+            if (nodeToParent[front] && !visited[nodeToParent[front]])
+            {
+                flag = 1;
+                visited[nodeToParent[front]] = 1;
+                q.push(nodeToParent[front]);
+            }
+        }
+
+        if (flag == 1)
+        {
+            ans++;
+        }
+    }
+    return ans;
+}
+
+int minTime(node *root, int target)
+{
+
+    map<node *, node *> nodeToParent;
+    node *targetNode = createMapping(root, target, nodeToParent);
+
+    int ans = burnTree(targetNode, nodeToParent);
+    return ans;
 }
 
 int main()
 {
     node *root = nullptr;
 
-    // 1 3 5 7 9 11 13 -1 -1 -1 -1 -1 -1 -1 -1
-    // 1 10 -1 5 -1 -1 -1
-    // 1 2 3 4 5 6 7 -1 -1 -1 -1 -1 -1 -1 -1
-
-    // 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
-
+    // 1 3 5 7 9 11 13 -1 -1 -1 -1 -1 -1
     buildFromLevelOrder(root);
     levelorderTraversal(root);
     cout << endl;
-
-    node *temp = lca(root, 3, 4);
-
-    cout << temp->data;
-
+    cout << minTime(root, 8);
     return 0;
 }
