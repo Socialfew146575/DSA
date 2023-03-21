@@ -21,7 +21,7 @@ public:
 Node *insertIntoBST(Node *root, int data)
 {
 
-    if (root == nullptr)
+    if (root == NULL)
     {
         root = new Node(data);
         return root;
@@ -93,7 +93,7 @@ void levelOrderTravesal(Node *root)
 void inorderTraversal(Node *root, vector<int> &in)
 {
 
-    if (root == nullptr)
+    if (root == NULL)
         return;
 
     inorderTraversal(root->left, in);
@@ -104,14 +104,12 @@ void inorderTraversal(Node *root, vector<int> &in)
 void solve(Node *&root, int &indx, vector<int> &in)
 {
 
-    if (root == nullptr)
+    if (root == NULL)
         return;
 
     root->data = in[indx++];
     solve(root->left, indx, in);
     solve(root->right, indx, in);
-
-    
 }
 
 Node *bstToMinHeap(Node *root)
